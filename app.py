@@ -377,60 +377,60 @@ with modelling_evaluasi:
 
 with implementasi:
     st.subheader("Implementasi Model")
-st.write(
-    "Pada tahap ini, kita akan menggunakan model Logistic Regression yang telah dilatih sebelumnya untuk melakukan prediksi terhadap data baru."
-)
-
-# Load model dan scaler
-model = pickle.load(open("logistic_model.pkl", "rb"))
-scaler = pickle.load(open("scaler.pkl", "rb"))
-
-# Daftar fitur yang dipilih (sesuaikan dengan fitur yang dipilih pada tahap preprocessing)
-selected_features = [
-    "perimeter_worst",
-    "radius_worst",
-    "area_worst",
-	"concave points_worst",
-    "concave points_mean",
-    "perimeter_mean",
-	"area_mean",
-    "concavity_mean",
-    "radius_mean",
-    "area_se",
-    "concavity_worst",
-    "perimeter_se",
-    "radius_se",
-    "compactness_mean",
-    "compactness_worst",
-]
-
-# Menampilkan input form untuk setiap fitur yang dipilih
-st.write("Masukkan nilai untuk fitur berikut:")
-
-input_values = {}
-
-for feature in selected_features:
-    input_values[feature] = st.number_input(
-        f"Masukkan nilai untuk {feature}", min_value=0.0, step=0.1
+    st.write(
+        "Pada tahap ini, kita akan menggunakan model Logistic Regression yang telah dilatih sebelumnya untuk melakukan prediksi terhadap data baru."
     )
 
-# Prediksi berdasarkan input
-if st.button("Prediksi"):
-    try:
-        # Membuat array numpy berdasarkan input pengguna
-        input_data = np.array([list(input_values.values())]).reshape(1, -1)
+    # Load model dan scaler
+    model = pickle.load(open("logistic_model.pkl", "rb"))
+    scaler = pickle.load(open("scaler.pkl", "rb"))
 
-        # Melakukan normalisasi input data
-        input_data_scaled = scaler.transform(input_data)
+    # Daftar fitur yang dipilih (sesuaikan dengan fitur yang dipilih pada tahap preprocessing)
+    selected_features = [
+        "perimeter_worst",
+        "radius_worst",
+        "area_worst",
+        "concave points_worst",
+        "concave points_mean",
+        "perimeter_mean",
+        "area_mean",
+        "concavity_mean",
+        "radius_mean",
+        "area_se",
+        "concavity_worst",
+        "perimeter_se",
+        "radius_se",
+        "compactness_mean",
+        "compactness_worst",
+    ]
 
-        # Prediksi menggunakan model
-        prediction = model.predict(input_data_scaled)
+    # Menampilkan input form untuk setiap fitur yang dipilih
+    st.write("Masukkan nilai untuk fitur berikut:")
 
-        # Konversi hasil prediksi menjadi M atau B
-        result = "M" if prediction == 1 else "B"
+    input_values = {}
 
-        # Menampilkan hasil prediksi
-        st.write("Hasil prediksi: Tumor tersebut adalah:", result)
+    for feature in selected_features:
+        input_values[feature] = st.number_input(
+            f"Masukkan nilai untuk {feature}", min_value=0.0, step=0.1
+        )
 
-    except Exception as e:
-        st.error(f"Terjadi kesalahan: {e}")
+    # Prediksi berdasarkan input
+    if st.button("Prediksi"):
+        try:
+            # Membuat array numpy berdasarkan input pengguna
+            input_data = np.array([list(input_values.values())]).reshape(1, -1)
+
+            # Melakukan normalisasi input data
+            input_data_scaled = scaler.transform(input_data)
+
+            # Prediksi menggunakan model
+            prediction = model.predict(input_data_scaled)
+
+            # Konversi hasil prediksi menjadi M atau B
+            result = "M" if prediction == 1 else "B"
+
+            # Menampilkan hasil prediksi
+            st.write("Hasil prediksi: Tumor tersebut adalah:", result)
+
+        except Exception as e:
+            st.error(f"Terjadi kesalahan: {e}")

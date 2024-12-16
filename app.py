@@ -322,12 +322,6 @@ with modelling_evaluasi:
             st.session_state["y_train"],
             epochs=100,
             batch_size=32,
-            validation_data=(
-                X_test_scaled,
-                st.session_state["y_test"],
-            ),  # Menggunakan data validasi
-            callbacks=[early_stop, reduce_lr],
-            verbose=1,
         )
         y_pred_ann = (model_ann.predict(st.session_state["X_test"]) > 0.5).astype("int32")
         accuracy_ann = accuracy_score(st.session_state["y_test"], y_pred_ann)
@@ -352,23 +346,23 @@ with modelling_evaluasi:
         st.text(summary_str)
 
 
-        st.write("4. KNN")
+        # st.write("4. KNN")
 
-        # sekarang buatka yang knn
-        model_knn = KNeighborsClassifier(n_neighbors=5)
-        model_knn.fit(st.session_state["X_train"], st.session_state["y_train"])
-        y_pred_knn = model_knn.predict(st.session_state["X_test"])
-        accuracy_knn = accuracy_score(st.session_state["y_test"], y_pred_knn)
-        st.write("Akurasi KNN:", accuracy_knn)
-        st.write("Classification Report KNN:")
-        class_report_knn = classification_report(st.session_state["y_test"], y_pred_knn)
-        st.text(class_report_knn)
-        st.write("Confusion Matrix KNN:")
-        cm_knn = confusion_matrix(st.session_state["y_test"], y_pred_knn)
-        cm_knn_df = pd.DataFrame(
-            cm_knn, index=["True Class 0", "True Class 1"], columns=["Pred 0", "Pred 1"]
-        )
-        st.dataframe(cm_knn_df)
+        # # sekarang buatka yang knn
+        # model_knn = KNeighborsClassifier(n_neighbors=5)
+        # model_knn.fit(st.session_state["X_train"], st.session_state["y_train"])
+        # y_pred_knn = model_knn.predict(st.session_state["X_test"])
+        # accuracy_knn = accuracy_score(st.session_state["y_test"], y_pred_knn)
+        # st.write("Akurasi KNN:", accuracy_knn)
+        # st.write("Classification Report KNN:")
+        # class_report_knn = classification_report(st.session_state["y_test"], y_pred_knn)
+        # st.text(class_report_knn)
+        # st.write("Confusion Matrix KNN:")
+        # cm_knn = confusion_matrix(st.session_state["y_test"], y_pred_knn)
+        # cm_knn_df = pd.DataFrame(
+        #     cm_knn, index=["True Class 0", "True Class 1"], columns=["Pred 0", "Pred 1"]
+        # )
+        # st.dataframe(cm_knn_df)
 
 
         st.write(
